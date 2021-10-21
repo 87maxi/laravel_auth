@@ -1,0 +1,77 @@
+version: '3'
+services:  
+    php:
+        build:
+            context: ./dc/php-mysqli
+        ports:
+            - 9000:9000
+        volumes:
+            - ./:/var/www/html
+            - ./dc/php-mysqli/www.conf:/usr/local/etc/php-fpm.d/www.conf
+        environment:
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        depends_on:
+            - mysql
+            - composer
+        restart: on-failure:10
+        command: > 
+            sh -c "
+                chown -R www-data:www-data /var/www/html/storage/framework &&
+                chown -R www-data:www-data /var/www/html/storage/logs &&
+                php artisan migrate &&
+                php artisan db:seed --force
+                php-fpm
+                "
+        networks:
+            - travellist
+            
+    nginx:
+        image: nginx:1.13.8
+        ports:
+            - 80:80
+        volumes:
+            - ./:/var/www/html
+            - ./dc/conf.d/nginx.conf:/etc/nginx/conf.d/nginx.conf
+        depends_on:
+            - php
+        networks:
+            - travellist
+  
+    mysql:
+        image: mysql:5.7
+        ports:
+            - 3306:3306
+        #depends_on:
+        #    - php
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        networks:
+            - travellist
+        volumes:
+            - dbdata:/var/lib/mysql
+    node:
+        image: node:14.18
+        volumes:
+            - ./:/home/node
+        command: >
+            sh -c "cd /home/node && npm install"
+        depends_on:
+            - php
+
+    composer:
+        image: composer
+        volumes:
+            - .:/app
+        command: composer install
+
+networks:
+  travellist:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
