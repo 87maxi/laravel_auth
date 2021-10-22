@@ -8,6 +8,7 @@ services:
         volumes:
             - ./:/var/www/html
             - ./dc/php-mysqli/www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./dc/php-mysqli/phplocal.ini:/usr/local/etc/php/conf.d/local.ini
         environment:
             MYSQL_USER: ${DB_USERNAME}
             MYSQL_PASSWORD: ${DB_PASSWORD}
@@ -53,6 +54,7 @@ services:
             - travellist
         volumes:
             - dbdata:/var/lib/mysql
+            - ./dc/php-mysqli/mysql.cnf:/etc/mysql/mysql.cnf
     node:
         image: node:14.18
         volumes:
