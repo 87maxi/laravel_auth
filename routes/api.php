@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CEOController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/register', [AuthController::class,'register'] );
+Route::post('/login', [AuthController::class,'login'] );
+
+Route::apiResource('/ceo', CeoController::class)->middleware('auth:api');
