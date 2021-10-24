@@ -9,21 +9,20 @@ services:
             - ./:/var/www/html
             - ./dc/php-mysqli/www.conf:/usr/local/etc/php-fpm.d/www.conf
             - ./dc/php-mysqli/phplocal.ini:/usr/local/etc/php/conf.d/local.ini
-        environment:
-            MYSQL_USER: ${DB_USERNAME}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
         depends_on:
             - mysql
             - composer
-        restart: on-failure:10
-        command: > 
-            sh -c "
-                chown -R www-data:www-data /var/www/html/storage/framework &&
-                chown -R www-data:www-data /var/www/html/storage/logs &&
-                php artisan migrate &&
-                php artisan db:seed --force
-                php-fpm
-                "
+            - postgres
+            - node
+        restart: on-failure
+        #command: > 
+        #   sh -c "/entrypoint.sh"
+        #       chown -R www-data:www-data /var/www/html/storage/framework &&
+        #        chown -R www-data:www-data /var/www/html/storage/logs &&
+        #        php artisan migrate &&
+        #        php artisan db:seed --force
+                #php-fpm
+        #        "
         networks:
             - travellist
             
@@ -40,7 +39,7 @@ services:
             - travellist
   
     mysql:
-        image: mysql:5.7
+        image: mysql:8.0.4
         ports:
             - 3306:3306
         #depends_on:
@@ -55,14 +54,28 @@ services:
         volumes:
             - dbdata:/var/lib/mysql
             - ./dc/php-mysqli/mysql.cnf:/etc/mysql/mysql.cnf
+    postgres:
+        image: postgres:14
+      #container_name: ${PROJECT_NAME}-postgres
+      #volumes:
+      #  - dbdata:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+            - POSTGRES_DB=${DB_DATABASE}
+            #- POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+            - "5432:5432"
+        networks:
+            - travellist
+        #volumes:
+        #    - ./dc/postgres/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
     node:
         image: node:14.18
         volumes:
             - ./:/home/node
         command: >
-            sh -c "cd /home/node && npm install"
-        depends_on:
-            - php
+            sh -c "cd /home/node && npm install"      
 
     composer:
         image: composer

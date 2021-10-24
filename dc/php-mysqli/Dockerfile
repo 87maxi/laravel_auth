@@ -22,4 +22,11 @@ RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
 RUN  docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install  gd
 
+RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
+
+
+COPY entrypoint.sh /
+RUN ["chmod", "+x", "/entrypoint.sh"]
+ENTRYPOINT [ "/entrypoint.sh" ]
+
 
