@@ -10,13 +10,15 @@ services:
             - ./dc/php-mysqli/www.conf:/usr/local/etc/php-fpm.d/www.conf
             - ./dc/php-mysqli/phplocal.ini:/usr/local/etc/php/conf.d/local.ini
         depends_on:
-            - postgres
-            - mysql
-            - composer
-            - node
+            postgres:
+                condition: service_healthy
+            mysql:
+                condition: service_healthy
+
         restart: always        
         networks:
             - travellist
+        tty: true
             
     nginx:
         image: nginx:1.13.8
@@ -46,6 +48,8 @@ services:
         volumes:
             - dbdata:/var/lib/mysql
             - ./dc/php-mysqli/mysql.cnf:/etc/mysql/mysql.cnf
+        healthcheck:
+            test: "exit 0"
     postgres:
         image: postgres:14-alpine
       #container_name: ${PROJECT_NAME}-postgres
@@ -62,6 +66,8 @@ services:
             - travellist
         #volumes:
         #    - ./dc/postgres/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+        healthcheck:
+            test: "exit 0"
     node:
         image: node:14.18
         volumes:
