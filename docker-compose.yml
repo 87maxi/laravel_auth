@@ -1,8 +1,9 @@
 version: '3.8'
-services:  
+services:
     php:
         build:
             context: ./dc/php-mysqli
+        image: larevel_php
         ports:
             - 9000:9000
         volumes:
@@ -15,11 +16,13 @@ services:
             mysql:
                 condition: service_healthy
 
-        restart: always        
+        restart: always
         networks:
             - travellist
-        tty: true
-            
+        healthcheck:
+            test: "exit 0"
+
+
     nginx:
         image: nginx:1.13.8
         ports:
@@ -28,10 +31,11 @@ services:
             - ./:/var/www/html
             - ./dc/conf.d/nginx.conf:/etc/nginx/conf.d/nginx.conf
         depends_on:
-            - php
+            php:
+                condition: service_healthy
         networks:
             - travellist
-  
+
     mysql:
         image: mysql:5.6
         ports:
@@ -46,7 +50,7 @@ services:
         networks:
             - travellist
         volumes:
-            - dbdata:/var/lib/mysql
+            - dbmysql:/var/lib/mysql
             - ./dc/php-mysqli/mysql.cnf:/etc/mysql/mysql.cnf
         healthcheck:
             test: "exit 0"
@@ -64,8 +68,8 @@ services:
             - "5432:5432"
         networks:
             - travellist
-        #volumes:
-        #    - ./dc/postgres/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+        volumes:
+            - pgsql:/var/lib/postgresql/data
         healthcheck:
             test: "exit 0"
     node:
@@ -73,7 +77,7 @@ services:
         volumes:
             - ./:/home/node
         command: >
-            sh -c "cd /home/node && npm install"      
+            sh -c "cd /home/node && npm install"
 
     composer:
         image: composer
@@ -86,5 +90,8 @@ networks:
     driver: bridge
 
 volumes:
-  dbdata:
-    driver: local
+    dbmysql:
+        external: true
+    pgsql:
+        external: true
+

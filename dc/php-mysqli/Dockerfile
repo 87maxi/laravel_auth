@@ -1,6 +1,5 @@
 FROM php:8-fpm
-    
-RUN apt-get update 
+
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
@@ -13,7 +12,9 @@ RUN apt-get update && apt-get install -y \
     #git \
     curl \
     libonig-dev \
-    libzip-dev
+    libzip-dev \
+    iputils-ping
+
 
 RUN  docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
@@ -30,5 +31,5 @@ RUN apt-get install -y libpq-dev \
 COPY entrypoint.sh /
 RUN ["chmod", "+x", "/entrypoint.sh"]
 ENTRYPOINT [ "/entrypoint.sh" ]
-
+CMD [ "php-fpm" ]
 

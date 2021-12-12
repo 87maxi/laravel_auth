@@ -50,7 +50,7 @@ class CEOController extends Controller
             return response(['ceo' => new CEOResource($ceo),
             'message' => 'Created Successfully', 200
           ]);
-        
+
     }
 
     /**
@@ -72,7 +72,7 @@ class CEOController extends Controller
      * @param  \App\Models\CEO  $cEO
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CEO $cEO)
+    public function update(Request $request, CEO $ceo)
     {
         $ceo->update($request->all());
         return response ([ 'ceo' => new CeoResource($ceo),
