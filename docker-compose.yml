@@ -15,7 +15,6 @@ services:
                 condition: service_healthy
             mysql:
                 condition: service_healthy
-
         restart: always
         networks:
             - travellist
@@ -32,9 +31,13 @@ services:
             - ./dc/conf.d/nginx.conf:/etc/nginx/conf.d/nginx.conf
         depends_on:
             php:
-                condition: service_healthy
+                condition: service_started
         networks:
             - travellist
+        restart: always
+        healthcheck:
+            test:  "exit 0"
+
 
     mysql:
         image: mysql:5.6
