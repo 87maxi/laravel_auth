@@ -83,7 +83,9 @@ services:
             sh -c "cd /home/node && npm install"
 
     composer:
-        image: composer
+        build:
+            context: ./dc/composer
+        image: larevel_composer
         volumes:
             - .:/app
         command: composer install

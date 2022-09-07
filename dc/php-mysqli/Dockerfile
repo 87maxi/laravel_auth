@@ -28,8 +28,18 @@ RUN apt-get install -y libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
 
+ARG uid=1000
+ARG gid=1000
+
+
+
+
 COPY entrypoint.sh /
 RUN ["chmod", "+x", "/entrypoint.sh"]
 ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "php-fpm" ]
+USER ${uid}:${gid}
+
+#RUN groupadd -r www-data && useradd -r -g user www-data
+
+CMD ["php-fpm" ]
 
