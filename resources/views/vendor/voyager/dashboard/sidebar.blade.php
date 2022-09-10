@@ -31,6 +31,10 @@
         </div>
         <div id="adminmenu">
             <admin-menu :items="{{ menu('admin', '_json') }}"></admin-menu>
+            <admin-menu :items="{{ menu('product', '_json') }}"></admin-menu>
+        </div>
+        <div>
+
         </div>
     </nav>
 </div>

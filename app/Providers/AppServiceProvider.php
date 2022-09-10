@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\FormFields\NumberFormField;
 use Illuminate\Support\Facades\Schema;
+use TCG\Voyager\Facades\Voyager;
+use TCG\Voyager\Facades\Voyager as VoyagerFacade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,9 +15,10 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
     public function register()
     {
-        #Passport::ignoreMigrations();
+       // Passport::ignoreMigrations();
     }
 
     /**
@@ -24,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         Schema::defaultStringLength(191);
     }
+
 }
