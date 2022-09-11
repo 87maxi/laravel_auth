@@ -2,3 +2,36 @@
     font-size: 17px;
     color: black;
 }
+
+#dataTable tbody, #table-log tbody{
+    font-size: 18px;
+    color: black;
+    font-weight:400 ;
+
+}
+
+#dataTable thead, #table-log thead {
+    font-size: 23px;
+    color: black;
+    font-weight:400 ;
+
+}
+
+.navbar-header ol {
+    font-size: 18px;
+}
+
+.form-control{ /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black;
+    opacity: 1; /* Firefox */
+}
+
+body, html{
+    color: black;
+    font-weight: 400;
+}
+
+label {
+    color: black;
+    font-weight: 600;
+}
