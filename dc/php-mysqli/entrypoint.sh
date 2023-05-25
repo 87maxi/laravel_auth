@@ -2,8 +2,11 @@
 set -Eeo pipefail
 
 
-chown -R www-data:www-data /var/www/html/storage/framework;
-chown -R www-data:www-data /var/www/html/storage/logs;
+
+ls -l
+
+chown -R www-data:www-data storage;
+
 
 php artisan migrate:refresh;
 

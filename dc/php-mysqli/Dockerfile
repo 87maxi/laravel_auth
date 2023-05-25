@@ -62,25 +62,16 @@ ARG uid=1000
 ARG gid=1000
 
 
-RUN  mkdir storage;
-RUN cd storage;
-RUN mkdir logs;
-RUN mkdir framework;
-RUn mkdir framework/cache;
-RUN mkdir framework/cache/data;
-RUn mkdir framework/sessions;
-RUn mkdir framework/testing;
-RUn mkdir framework/views;
-RUN cd ..
 
-RUN chown -R 777 storage 
+
 
 RUN apk del build-essentials && rm -rf /usr/src/php*
 
 COPY entrypoint.sh /
 RUN ["chmod", "+x", "/entrypoint.sh"]
+
+
+
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]
-
-
 
 CMD ["php-fpm" ]

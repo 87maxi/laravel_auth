@@ -16,16 +16,18 @@ RUN mkdir /app
 
 WORKDIR /app
 
+RUN mkdir -p storage/framework/cache
+
 COPY entrypoint.sh /
 RUN ["chmod", "+x", "/entrypoint.sh"]
 
-ARG uid=1000
-ARG gid=1000
-
-USER ${uid}:${gid}
 
 
 ENTRYPOINT [ "/entrypoint.sh" ]
+
+
+
+
 
 
 

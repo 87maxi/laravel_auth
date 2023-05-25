@@ -2,20 +2,18 @@
 #set -Eeo pipefail
 
 cd /app;
-
 mkdir storage;
 cd storage;
 mkdir logs;
 mkdir framework;
-mkdir framework/cache && framework/cache/data;
-mkdir framework/sessions;
-mkdir framework/testing;
-mkdir framework/views;
+mkdir -p framework/cache 
+mkdir -p framework/cache/data;
+mkdir -p framework/sessions;
+mkdir -p framework/testing;
+mkdir -p framework/views;
 
-chgrp -R www-data ../storage
-chown -R www-data ../storage
-
-cd ..;
+cd .. ;
+chown -R  www-data:www-data storage;
 
 
 php -v;
