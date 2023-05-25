@@ -73,7 +73,7 @@ RUn mkdir framework/testing;
 RUn mkdir framework/views;
 RUN cd ..
 
-RUN chown -R www-data:www-data storage 
+RUN chown -R 777 storage 
 
 RUN apk del build-essentials && rm -rf /usr/src/php*
 
