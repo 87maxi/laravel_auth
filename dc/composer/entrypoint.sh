@@ -3,16 +3,22 @@
 
 cd /app;
 
-mkdir storage/cache;
+cd storage
+mkdir logs
+mkdir framework
+mkdir framework/cache && framework/cache/data
+mkdir framework/sessions
+mkdir framework/testing
+mkdir framework/views
 
-uid=1000
-gid=1000
+chgrp -R www-data ../storage
+chown -R www-data ../storage
 
-chown -R ${uid}:${gid} /var/www/html/storage/cache;
+cd ..;
 
 
 php -v;
 
-ls -l storage/;
+ls -la ${PWD}
 
 composer install;
