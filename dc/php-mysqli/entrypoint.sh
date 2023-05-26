@@ -1,11 +1,8 @@
 #!/bin/bash
-set -Eeo pipefail
+#set -Eeo pipefail
 
-
-
-ls -l
-
-chown -R www-data:www-data storage;
+php artisan cache:clear
+chmod -R 777 storage/
 
 
 php artisan migrate:refresh;

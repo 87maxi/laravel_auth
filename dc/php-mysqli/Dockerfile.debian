@@ -35,7 +35,7 @@ ARG gid=1000
 
 
 COPY entrypoint.sh /
-RUN ["chmod", "+x", "/entrypoint.sh"]
+RUN chmod +x, /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 USER ${uid}:${gid}
 
