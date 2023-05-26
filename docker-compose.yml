@@ -87,8 +87,8 @@ services:
             context: ./dc/composer
         image: larevel_composer
         volumes:
-            - .:/app
-        command: composer install
+            - .:/home/www-data
+
 
 networks:
   travellist:

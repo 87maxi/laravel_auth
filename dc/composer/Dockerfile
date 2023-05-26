@@ -10,20 +10,20 @@ RUN alias composer='php composer.phar'
 
 RUN mv composer.phar /usr/local/bin/composer
 
-RUN mkdir /app
+
+COPY entrypoint.sh   / 
+
+RUN chmod 775 /entrypoint.sh
 
 
 
-WORKDIR /app
-
-RUN mkdir -p storage/framework/cache
-
-COPY entrypoint.sh /
-RUN ["chmod", "+x", "/entrypoint.sh"]
-
+WORKDIR /home/www-data
 
 
 ENTRYPOINT [ "/entrypoint.sh" ]
+
+
+
 
 
 

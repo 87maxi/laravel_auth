@@ -1,23 +1,25 @@
 #!/bin/bash
 #set -Eeo pipefail
 
-cd /app;
-mkdir storage;
-cd storage;
-mkdir logs;
-mkdir framework;
-mkdir -p framework/cache 
-mkdir -p framework/cache/data;
-mkdir -p framework/sessions;
-mkdir -p framework/testing;
-mkdir -p framework/views;
-
-cd .. ;
-chown -R  www-data:www-data storage;
 
 
-php -v;
 
-ls -la ${PWD}
+cd /home/www-data;
 
-composer install;
+
+
+mkdir -p ./storage/logs;
+
+mkdir -p ./storage/framework;
+
+mkdir -p ./storage/framework/cache;
+
+mkdir -p ./storage/framework/sessions;
+
+mkdir -p ./storage/framework/views;
+
+chown 1000:1000 -R ./storage;
+
+composer install
+
+chown 1000:1000 -R ./vendor;
