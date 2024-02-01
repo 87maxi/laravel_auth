@@ -3,7 +3,7 @@ services:
     php:
         build:
             context: ./dc/php-mysqli
-        image: larevel_php
+        image: php:laravel
         ports:
             - 9000:9000
         volumes:

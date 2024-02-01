@@ -1,11 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 #set -Eeo pipefail
+cd /var/www/html;
+php artisan  migrate:refresh ;
 
-php artisan cache:clear
-chmod -R 777 storage/
-
-
-php artisan migrate:refresh;
-
-
-$@
+php-fpm;

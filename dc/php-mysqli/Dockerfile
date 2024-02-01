@@ -67,11 +67,12 @@ ARG gid=1000
 
 RUN apk del build-essentials && rm -rf /usr/src/php*
 
+
 COPY entrypoint.sh /
-RUN ["chmod", "+x", "/entrypoint.sh"]
 
+RUN  chmod +x /entrypoint.sh
 
+ 
 
-ENTRYPOINT [ "sh", "/entrypoint.sh" ]
+ENTRYPOINT [ "sh", "/entrypoint.sh"  ]
 
-CMD ["php-fpm" ]

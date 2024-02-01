@@ -1,25 +1,19 @@
 #!/bin/bash
 #set -Eeo pipefail
+ 
 
+mkdir -p /home/www-data/storage/logs;
 
+mkdir -p /home/www-data/storage/framework;
 
+mkdir -p /home/www-data/storage/framework/cache;
 
-cd /home/www-data;
+mkdir -p /home/www-data/storage/framework/sessions;
 
+mkdir -p /home/www-data/storage/framework/views;
 
+chown 1000:1000 -R /home/www-data/storage;
 
-mkdir -p ./storage/logs;
+composer install;
 
-mkdir -p ./storage/framework;
-
-mkdir -p ./storage/framework/cache;
-
-mkdir -p ./storage/framework/sessions;
-
-mkdir -p ./storage/framework/views;
-
-chown 1000:1000 -R ./storage;
-
-composer install
-
-chown 1000:1000 -R ./vendor;
+chown 1000:1000 -R /home/www-data/vendor;

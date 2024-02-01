@@ -5,22 +5,25 @@ RUN apk add bash
 RUN apk add curl
 
 # INSTALL COMPOSER
-RUN curl -s https://getcomposer.org/installer | php
-RUN alias composer='php composer.phar'
+RUN curl https://getcomposer.org/installer > /composer.php
 
-RUN mv composer.phar /usr/local/bin/composer
+RUN php composer.php
+RUN chmod 777 /composer.phar
+RUN mv /composer.phar /usr/local/bin/composer 
 
+COPY entrypoint.sh /
 
-COPY entrypoint.sh   / 
-
-RUN chmod 775 /entrypoint.sh
-
-
+RUN  chmod +x entrypoint.sh
 
 WORKDIR /home/www-data
 
+ENTRYPOINT [ "sh", "/entrypoint.sh" ]
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+
+
+
+
+
 
 
 
